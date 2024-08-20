@@ -77,7 +77,22 @@ class TestAMAPGeoAPI(unittest.TestCase):
         self.assertEqual(data['status'], '0')  # 检查 API 响应状态是否为 '0'，表示失败
         self.assertEqual(data.get('info'), 'INVALID_USER_KEY')  # 根据实际 API 错误信息调整预期值
 
+    def test_geocode_invalid_key(self):
+        # 测试地理编码服务使用无效的 API Key
+        params = {
+            'address': '南京市江宁区将军大道 29 号南京航空航天大学',
+            'key': 'INVALID_API_KEY_SZ2316108'
+        }
+        # 发送 GET 请求到地理编码接口
+        response = requests.get(f'{self.base_url}/geocode/geo', params=params)
+        data = response.json()
 
+        print(data)
+
+        # 验证响应状态码和返回状态
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['status'], '0')  # 检查 API 响应状态是否为 '0'，表示失败
+        self.assertEqual(data.get('info'), 'INVALID_USER_KEY')  # 根据实际 API 错误信息调整预期值
 
     @classmethod
     def tearDownClass(cls) -> None:
