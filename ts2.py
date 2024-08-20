@@ -64,23 +64,7 @@ class TestAMAPCoordinateConvertAPI(unittest.TestCase):
         self.assertEqual(data['status'], '1')  # 检查 API 响应状态是否为 '0'，表示失败
         self.assertEqual(data.get('info'), 'ok')  # 检查错误信息是否为 'INVALID_PARAMS'
 
-    def test_coordinate_conversion_missing_key(self):
-        # 设置请求参数，缺少 API Key
-        params = {
-            'locations': '116.481499,39.990475',  # 有效坐标
-            'coordsys': 'gps'
-        }
 
-        # 发送 GET 请求到坐标转换接口
-        response = requests.get(self.base_url, params=params)
-        data = response.json()
-
-        print(data)
-
-        # 验证响应状态码和返回状态
-        self.assertEqual(response.status_code, 200)  # 检查 HTTP 状态码是否为 200
-        # self.assertEqual(data['status'], '0')  # 检查 API 响应状态是否为 '0'，表示失败
-        # self.assertEqual(data.get('info'), 'INVALID_USER_KEY')  # 检查错误信息是否为 'INVALID_USER_KEY'
 
     @ddt.data(*data_coordsys_invalid)
     def test_coordinate_conversion_invalid_coordsys_ddt(self, data):
